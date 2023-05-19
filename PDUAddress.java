@@ -30,7 +30,7 @@ public class PDUAddress {
         // lengh byte
         var len = result.length() / 2;
         String lengthByte = Integer.toHexString(len);
-        if(len < 10){
+        if(lengthByte.length()<2){
             lengthByte = "0"+lengthByte;
         }
         // Swap the characters

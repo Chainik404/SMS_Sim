@@ -10,7 +10,7 @@ public class Test_02 {
         String encoded = address1.Encode();
         PDUAddress address2 = new PDUAddress(encoded);    
         String decoded = address2.Decode();
-        System.out.println("SRC = " + address + " DST = " + decoded);
+        System.out.println("SRC = " + address + "ENC = " + encoded + ". Decoded = " + decoded);
     
        }
 
