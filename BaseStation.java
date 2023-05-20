@@ -1,16 +1,16 @@
 import java.util.Queue;
-
-import sources.SMSData;
-
 import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 
 public class BaseStation {
+    private String Name;
     private int MaxCapacity;
     private int SMSLifeSeconds;
     private Queue<SMSData> Items;
     
-    
-    public BaseStation(int maxCapacity, int smsLifeSeconds){
+    public BaseStation(String name, int maxCapacity, int smsLifeSeconds){
+        this.Name = name;
         this.MaxCapacity = maxCapacity;
         this.SMSLifeSeconds = smsLifeSeconds;
         this.Items = new LinkedList<>();
@@ -24,13 +24,12 @@ public class BaseStation {
         return this.Items.size() < this.MaxCapacity;
     }
 
-    public SMSData Add(String address, String message){
-        SMSData smsData = null;
-        if(this.HasCapacity()){
-            smsData = new SMSData(address, message, this.SMSLifeSeconds);
+    public Boolean Add(SMSData smsData){
+        var result = this.HasCapacity();
+        if(result){
             this.Items.add(smsData);
         }
-        return smsData;
+        return result;
     }
 
     public SMSData Get(){
@@ -45,15 +44,19 @@ public class BaseStation {
     }
 
     public List<SMSData> GetMany(){
-        List<SMSData> list = new List<>();
+        List<SMSData> list = new ArrayList<>();
         while(true){
             var smsData = this.Get();
             if(smsData == null){
                 break;
             }
-            list.Add(smsData);
+            list.add(smsData);
         }
         return list;
+    }
+
+    public void ShowInfo(){
+        System.out.println(this.Name + " : size =  " + this.Items.size());
     }
 }
 

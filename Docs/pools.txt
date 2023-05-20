@@ -30,7 +30,7 @@ Base Transceiver Station : BaseStation
 
 
 ----------------------
-SMSStationFactory
+SMSStationFactory SMSContext
  VSDDataFactory SendersFactory;
  BTSFactory SenderBTS;
  //
@@ -56,3 +56,27 @@ VDS - [N-SMS]
 BST= Factory
 
 Pool-Thread - BTS - wait for icoming SMS List
+
+-------
+
+
+VSD - 20/sec,
+VSD - 50/sec
+VSD - 100/sec
+\-------
+
+           6/14/28 SMS      67 SMS                           25SMS  = 170SMS
+|------------P---------------P---------------------------------P------|             P
+
+VSD-1.GetSMSCount() - 20/sec = 0.02 SMS /mlsec
+current - t1 = 300 mlsec
+300 * 0.02 = 6; 
+6 / 0.02 = 300
+
+
+
+1) f1() ----    -----    ------  ---    ---  ---
+2) f2() ------   ---- ----     ------  ---  --
+3) --     -----    ----   ---   ------   ---
+
+t-------------------------

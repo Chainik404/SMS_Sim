@@ -1,29 +1,28 @@
-import java.util.Queue;
 import java.util.ArrayList;
 import java.util.List;
-import sources.SMSData;
-
-import java.util.LinkedList;
 
 public class BaseStationFactory {
+    private String Name;
     private int MaxCapacity;
     private int SMSLifeSeconds;    
     private List<BaseStation> Stations;
     
     
-    public BaseStationFactory(int maxCapacity, int smsLifeSeconds){
+    public BaseStationFactory(String name,int maxCapacity, int smsLifeSeconds){
+        this.Name = name;
         this.MaxCapacity = maxCapacity;
         this.SMSLifeSeconds = smsLifeSeconds;        
         this.Stations = new ArrayList<>();
     }
     
-    public SMSData Add(String address, String message){
-        SMSData smsData = null;
+    public boolean Add(SMSData smsData){
         BaseStation station = FindAvailableStation();
-        if(station != null){
-            smsData = station.Add(address, message);
+        var result =  station != null;
+        if(result){
+            smsData.Init(this.SMSLifeSeconds);
+            station.Add(smsData);
         }
-        return smsData;
+        return result;
     }
 
     private BaseStation FindAvailableStation(){
@@ -35,11 +34,37 @@ public class BaseStationFactory {
             }
         }
         if(result == null){
-            result = new BaseStation(this.MaxCapacity, this.SMSLifeSeconds);
+            var index = this.Stations.size()+1;
+            String name = "BTS-" + index ;
+            result = new BaseStation(name, this.MaxCapacity, this.SMSLifeSeconds);
             this.Stations.add(result);
         }
         return result;
     }
 
-    
+    public List<SMSData> GetMany(){
+        List<SMSData> list = new ArrayList<>();
+        List<BaseStation> removeList = new ArrayList<>();
+        for(var station : this.Stations){
+            var temp = station.GetMany();
+            list.addAll(temp);
+            if(station.Empty()){
+                removeList.add(station);
+            }       
+        }
+        // remove empty stations
+        for(var station : removeList){
+            this.Stations.remove(station);       
+        }
+        removeList.clear();
+        return list;
+    }
+
+    public void ShowInfo(){
+
+        System.out.println(this.Name + " : " + this.Stations.size());
+        for(var station : this.Stations){
+            station.ShowInfo();
+        }
+    }
 }
