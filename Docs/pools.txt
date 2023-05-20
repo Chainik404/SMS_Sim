@@ -1,0 +1,58 @@
+
+
+Thread / Pool / Background worker
+
+void PoolFunction(a,b,c){
+    // ......
+    // a, b, c 
+    // use global variable, global resource ..
+    GLOBAL  = 2;
+    a = GLOBAL + c;
+    ++i;
+    i++;
+}
+------
+VSDData
+VSDDataFactory - 
+
+VRDData
+VRDDataFactory - 
+
+SMSData (GUID, Data ...., datetime created, )
+
+
+BaseStation (Queue) Queue<SMSData>
+BaseStationFactory - List<BaseStation>
+ - add new SMSData
+ - processSMS();
+
+Base Transceiver Station : BaseStation
+
+
+----------------------
+SMSStationFactory
+ VSDDataFactory SendersFactory;
+ BTSFactory SenderBTS;
+ //
+ List<BSCFactory> BSCFactories;
+ //
+ BTSFactory RecivrBTS;
+ VRDDataFactory RecivrsFactory;
+
+
+  
+
+  VSD-1  |   BTS-S1(1)  | BSC-1(1) | BSC-1(1) | VRD-1(122) | 
+  VSD-2  |   BTS-S2(0)  |
+         |   BTS-S3(0)  |
+
+-------------------------------------------------------------
+STEP - 
+
+void GetSMSFromBTSSenders()
+------------------------
+
+VDS - [N-SMS]
+BST= Factory
+
+Pool-Thread - BTS - wait for icoming SMS List
