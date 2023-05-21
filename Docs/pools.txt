@@ -80,3 +80,7 @@ current - t1 = 300 mlsec
 3) --     -----    ----   ---   ------   ---
 
 t-------------------------
+
+LEFT-FACTORY - GETDATA -> RIGHT FACTORY
+
+[sender-address]04[destin-address]

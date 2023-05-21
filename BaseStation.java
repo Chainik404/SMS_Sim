@@ -6,13 +6,11 @@ import java.util.ArrayList;
 public class BaseStation {
     private String Name;
     private int MaxCapacity;
-    private int SMSLifeSeconds;
-    private Queue<SMSData> Items;
+    private Queue<IPDUData> Items;
     
-    public BaseStation(String name, int maxCapacity, int smsLifeSeconds){
+    public BaseStation(String name, int maxCapacity){
         this.Name = name;
         this.MaxCapacity = maxCapacity;
-        this.SMSLifeSeconds = smsLifeSeconds;
         this.Items = new LinkedList<>();
     }
 
@@ -24,29 +22,41 @@ public class BaseStation {
         return this.Items.size() < this.MaxCapacity;
     }
 
-    public Boolean Add(SMSData smsData){
+    public Boolean Add(IPDUData pduData){
         var result = this.HasCapacity();
         if(result){
-            this.Items.add(smsData);
+            this.Items.add(pduData);
         }
         return result;
     }
 
-    public SMSData Get(){
-        SMSData smsData = null;
+    public IPDUData Get(){
+        IPDUData pduData = null;
         if(!this.Empty()){
-            smsData = this.Items.peek();
-            if(smsData.GoAway()){
-                smsData = this.Items.poll();
+            pduData = this.Items.peek();
+            if(pduData.OutOfLifeTime()){
+                pduData = this.Items.poll();
             }
         }
-        return smsData;
+        return pduData;
     }
 
-    public List<SMSData> GetMany(){
-        List<SMSData> list = new ArrayList<>();
+    public List<IPDUData> GetMany(){
+        List<IPDUData> list = new ArrayList<>();
         while(true){
             var smsData = this.Get();
+            if(smsData == null){
+                break;
+            }
+            list.add(smsData);
+        }
+        return list;
+    }
+
+    public List<IPDUData> Extract(){
+        List<IPDUData> list = new ArrayList<>();
+        while(this.Items.size()>0){
+            var smsData = this.Items.poll();
             if(smsData == null){
                 break;
             }
@@ -59,4 +69,3 @@ public class BaseStation {
         System.out.println(this.Name + " : size =  " + this.Items.size());
     }
 }
-

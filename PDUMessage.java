@@ -7,14 +7,22 @@ public class PDUMessage {
         this.Text = message;
         
     }
-    public String Encode(){
+
+    public boolean SupportEncoding(){
+        return true;
+    }
+    public boolean SupportDecoding(){
+        return true;
+    }
+
+    public Object Encode(){
         String result = this.Text;
 
         return result;
 
     }
 
-    public String Decode(){
+    public Object Decode(){
         String result = this.Text;
 
         return result;

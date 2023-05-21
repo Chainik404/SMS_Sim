@@ -4,7 +4,7 @@ public class PDUAddress {
 	public static final int ADDRESS_TYPE_UNKNOWN       = 0x00;
 	public static final int ADDRESS_TYPE_INTERNATIONAL = 0x10; // 00010000
     public static final int ADDRESS_TYPE_NATIONAL      = 0x20; // 00100000
-	public static final int ADDRESS_TYPE_ALPHANUMERIC = 0x50;  // 01110000
+	public static final int ADDRESS_TYPE_ALPHANUMERIC  = 0x50;  // 01110000
     public static final String ADDRESS_INTR_HEADER = "91";
     private String Number;
     private Boolean International;
@@ -17,6 +17,9 @@ public class PDUAddress {
 		{
 			this.Number = address.substring(1);
 		}
+    }
+    public String Value(){
+        return this.Number;
     }
     public String Encode(){
         // Convert the number to ASCII
@@ -36,8 +39,8 @@ public class PDUAddress {
         // Swap the characters
         String swapped = swapCharacters(result);
 
-        return lengthByte + swapped;
-
+        result = lengthByte + swapped;
+        return result;
     }
 
     public String Decode(){
