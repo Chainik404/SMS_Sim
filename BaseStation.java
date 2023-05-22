@@ -66,6 +66,6 @@ public class BaseStation {
     }
 
     public void ShowInfo(){
-        System.out.println(this.Name + " : size =  " + this.Items.size());
+        System.out.print(this.Name + "[ " + this.Items.size()+" / " + this.MaxCapacity + "]");
     }
 }

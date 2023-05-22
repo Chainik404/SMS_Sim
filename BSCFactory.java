@@ -3,14 +3,12 @@ import java.util.UUID;
 import java.util.ArrayList;
 
 public class BSCFactory implements IPDUDataFactory{
-    private String Name;
-    private int MaxCapacity;
+    private String Name;    
     private int SMSLifeSeconds;    
     private List<BaseStationFactory> Factories;
     
-    public BSCFactory(String name,int maxCapacity, int smsLifeSeconds, boolean supportEncoding, boolean supportDecoding){
+    public BSCFactory(String name,int smsLifeSeconds){
         this.Name = name;
-        this.MaxCapacity = maxCapacity;
         this.SMSLifeSeconds = smsLifeSeconds;        
         this.Factories = new ArrayList<>();
     }
@@ -46,9 +44,8 @@ public class BSCFactory implements IPDUDataFactory{
 
     public void Add(BaseStationFactory factory){
         this.Factories.add(factory);
-
     }
-    //#region IPDUDataTransfer implementation
+    //#region IPDUDataFactory implementation
 
     public UUID GetID(){
         return UUID.randomUUID();
@@ -63,9 +60,19 @@ public class BSCFactory implements IPDUDataFactory{
 
     public List<IPDUData> GetData(){
         List<IPDUData> result = new ArrayList<>();
-        for(var factory : this.Factories){
-            var temp = factory.GetData();
-            result.addAll(temp);
+        // move data from one factory to another        
+        int cnt = this.Factories.size()-1;
+        if(cnt > 0){
+            for(int i=0;i<cnt;++i){
+                var src = this.Factories.get(i);
+                var dst = this.Factories.get(i+1);
+                var list = src.GetData();
+                dst.PutData(list);
+            }
+        }
+        if(cnt > -1){
+            var lastFactory = this.Factories.get(cnt);
+            result = lastFactory.GetData();
         }
         return result;
     }
@@ -81,6 +88,9 @@ public class BSCFactory implements IPDUDataFactory{
     //#endregion
 
     public void ShowInfo(){
-
+        System.out.println(this.Name + "(" + this.Factories.size()+") : ");
+        for(var factory : this.Factories){
+            factory.ShowInfo();
+        }
     }
 }

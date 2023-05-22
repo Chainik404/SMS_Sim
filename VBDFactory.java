@@ -1,14 +1,19 @@
-import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+import java.util.ArrayList;
 
-public class VSDFactory implements IPDUDataTransfer {
+public class VBDFactory implements IPDUDataFactory {
     
-    public List<VSD> Items;
+    public List<VBD> Items;
     
-    public VSDFactory(){
+    public VBDFactory(){
         this.Items = new ArrayList<>();
     }
 
+    public UUID GetID(){
+        return UUID.randomUUID();
+    }
+    
     public boolean SupportEncoding(){
         return true;
     }
@@ -19,11 +24,11 @@ public class VSDFactory implements IPDUDataTransfer {
 
     public List<IPDUData> GetData(){
         List<IPDUData> result = new ArrayList<>();
-        for(var vsd : this.Items){
-            int count = vsd.GetSMSToRender();
+        for(var vbd : this.Items){
+            int count = vbd.GetSMSToRender();
             if(count > 0){
                 for(int i=0;i<count;++i){
-                    var smsData = vsd.Create();
+                    var smsData = vbd.Create();
                     result.add(smsData);
                 }
             }
@@ -38,7 +43,14 @@ public class VSDFactory implements IPDUDataTransfer {
         return 0;
     }
 
-    public void Add(VSD vsd){
+    public void Add(VBD vsd){
         this.Items.add(vsd);
+    }
+
+    public void ShowInfo(){
+        System.out.println("VBD-Factory - " + this.Items.size() + " items:");
+        for(var vbd : this.Items){
+            vbd.ShowInfo();
+        }
     }
 }

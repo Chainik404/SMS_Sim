@@ -20,6 +20,6 @@ public class VRD {
 
     public void ShowInfo(){
         var cnt = this.Inbox.size();
-        System.out.println("\tVRD: [" + this.Address + "]. Inbox: " + cnt + " sms(s)");
+        System.out.print("VRD: [" + this.Address + "]. Inbox: " + cnt + " sms(s)");
     }
 }

@@ -1,6 +1,3 @@
-import java.util.UUID;
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class SMSData extends BaseData implements IPDUData {
@@ -27,7 +24,7 @@ public class SMSData extends BaseData implements IPDUData {
     }
 
     public String GetAddress(){
-        return this.DestinAddress.Number();
+        return this.DestinAddress.Value();
     }
     
     public void ShowInfo(){

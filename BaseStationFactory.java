@@ -45,7 +45,7 @@ public class BaseStationFactory implements IPDUDataFactory{
         return result;
     }
 
-    //#region IPDUDataTransfer implementation
+    //#region IPDUDataFactory implementation
 
     public UUID GetID(){
         return this.Id;
@@ -99,8 +99,7 @@ public class BaseStationFactory implements IPDUDataFactory{
     } 
 
     public void ShowInfo(){
-
-        System.out.println(this.Name + " : " + this.Stations.size());
+        System.out.println(this.Name + "(" + this.Stations.size()+") : ");
         for(var station : this.Stations){
             station.ShowInfo();
         }

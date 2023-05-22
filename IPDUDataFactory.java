@@ -8,4 +8,5 @@ public interface IPDUDataFactory {
     List<IPDUData> GetData();
     void PutData(List<IPDUData> dataList);
     long GetLifeTime();
+    void ShowInfo();
 }

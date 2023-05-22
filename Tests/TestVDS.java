@@ -3,7 +3,7 @@ import java.util.Scanner;
 
 public class TestVDS {
     public static void main(String[] args) {
-        var vsd = new VSD(20,"","","");
+        var vsd = new VBD("VBD-1",20,"","","");
         vsd.SetFrequency(50);
         Scanner sc = new Scanner(System.in);
         while(true){

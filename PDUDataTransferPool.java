@@ -15,6 +15,9 @@ public class PDUDataTransferPool implements Runnable {
         IPDUDataFactory destin,
         long sleepTime){
         this.Context = context;
+        this.Source = source;
+        this.Destin = destin;
+        this.SleepTime = sleepTime;
     }
 
     public void run() {

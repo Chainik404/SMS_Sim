@@ -17,7 +17,9 @@ public class PDUData extends BaseData implements IPDUData {
         SMSData result = new SMSData("asdasd","asdasdasd","asdasdasd");
         return result;
     }
-    
+    public String GetAddress(){
+        return "";
+    }
     public void ShowInfo(){
         
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm:ss.SSS");
