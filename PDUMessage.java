@@ -8,6 +8,9 @@ public class PDUMessage {
         
     }
 
+    public String Value(){
+        return this.Text;
+    }
     public boolean SupportEncoding(){
         return true;
     }

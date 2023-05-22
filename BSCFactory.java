@@ -2,7 +2,11 @@ import java.util.List;
 import java.util.UUID;
 import java.util.ArrayList;
 
-public class BSCFactory implements IPDUDataFactory{
+import java.io.IOException;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+public class BSCFactory implements IPDUDataFactory, IDataSerializer{
     private String Name;    
     private int SMSLifeSeconds;    
     private List<BaseStationFactory> Factories;
@@ -91,6 +95,36 @@ public class BSCFactory implements IPDUDataFactory{
         System.out.println(this.Name + "(" + this.Factories.size()+") : ");
         for(var factory : this.Factories){
             factory.ShowInfo();
+        }
+    }
+
+    public void Save(DataOutputStream dos){        
+        try {
+            dos.writeUTF(this.Name);
+            dos.writeInt(this.SMSLifeSeconds);           
+            int cnt = this.Factories.size();
+            dos.writeInt(cnt);
+            for(var factory : this.Factories){
+                factory.Save(dos);
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void Load(DataInputStream dis){
+        try {
+            this.Name = dis.readUTF();
+            this.SMSLifeSeconds = dis.readInt();
+            int cnt = dis.readInt();
+            for(int i=0;i<cnt;++i){
+                var factory = new BaseStationFactory("temp",1,1);
+                factory.Load(dis);
+                this.Add(factory);
+            }
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

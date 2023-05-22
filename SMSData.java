@@ -1,6 +1,10 @@
+import java.io.IOException;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
 import java.time.format.DateTimeFormatter;
 
-public class SMSData extends BaseData implements IPDUData {
+public class SMSData extends BaseData implements IPDUData, IDataSerializer {
 
     private PDUAddress SenderAddress;
     private PDUAddress DestinAddress;
@@ -33,5 +37,26 @@ public class SMSData extends BaseData implements IPDUData {
         String formattedDateTime = this.CreatedOn.format(formatter); 
         
         System.out.println("SMS: " + this.Id + "Created: " + formattedDateTime);
+    }
+
+    public void Save(DataOutputStream dos){        
+        try {
+            dos.writeUTF(this.SenderAddress.Value());
+            dos.writeUTF(this.DestinAddress.Value());
+            dos.writeUTF(this.Message.Value());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void Load(DataInputStream dis){
+        try {
+            this.SenderAddress = new PDUAddress(dis.readUTF());
+            this.DestinAddress = new PDUAddress(dis.readUTF());
+            this.Message = new PDUMessage(dis.readUTF());
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }

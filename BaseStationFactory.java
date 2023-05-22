@@ -2,7 +2,11 @@ import java.util.UUID;
 import java.util.List;
 import java.util.ArrayList;
 
-public class BaseStationFactory implements IPDUDataFactory{
+import java.io.IOException;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+
+public class BaseStationFactory implements IPDUDataFactory, IDataSerializer{
     private UUID Id;
     private String Name;
     private int MaxCapacity;
@@ -102,6 +106,30 @@ public class BaseStationFactory implements IPDUDataFactory{
         System.out.println(this.Name + "(" + this.Stations.size()+") : ");
         for(var station : this.Stations){
             station.ShowInfo();
+        }
+    }
+
+    public void Save(DataOutputStream dos){        
+        try {
+            dos.writeUTF(this.Id.toString());
+            dos.writeUTF(this.Name);
+            dos.writeInt(this.MaxCapacity);
+            dos.writeInt(this.SMSLifeSeconds);
+            
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void Load(DataInputStream dis){
+        try {
+            this.Id = UUID.fromString(dis.readUTF());
+            this.Name = dis.readUTF();
+            this.MaxCapacity = dis.readInt();
+            this.SMSLifeSeconds = dis.readInt();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 }

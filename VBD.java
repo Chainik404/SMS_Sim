@@ -1,11 +1,15 @@
+import java.io.IOException;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 
-public class VBD {
+public class VBD implements IDataSerializer{
     private String Name;
     private Integer Frequency; // quantity SMS per one second
     private String SenderAddress;
     private String DestinAddress;
     private String Message;
     private boolean Active;
+    private int SentSMS;
 
     private long LastSyncTimeMark;
     private Double SMSPerMillisecond;
@@ -19,6 +23,7 @@ public class VBD {
         this.SMSPerMillisecond = (Double)(frequency/1000.0);
         this.LastSyncTimeMark = 0;
         this.Active = true;
+        this.SentSMS = 0;
     }
 
     public void SetFrequency(Integer frequency){
@@ -59,10 +64,40 @@ public class VBD {
     }
 
     public SMSData Create(){
+        this.SentSMS++;
         return new SMSData(this.SenderAddress, this.DestinAddress, Message);
     }
 
     public void ShowInfo(){
-        System.out.print(this.Name + "[" + this.Frequency + "/sec] => " + this.DestinAddress);
+        System.out.println(this.Name + "[" + this.Frequency + "/sec] => " + this.DestinAddress+". Outbox = " + this.SentSMS);
+    }
+
+    public void Save(DataOutputStream dos){        
+        try {
+            dos.writeUTF(this.Name);
+            dos.writeInt(this.Frequency);
+            dos.writeUTF(this.SenderAddress);
+            dos.writeUTF(this.DestinAddress);
+            dos.writeUTF(this.Message);
+            dos.writeBoolean(this.Active);
+            dos.writeInt(this.SentSMS);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+    public void Load(DataInputStream dis){
+        try {
+            this.Name = dis.readUTF();
+            this.Frequency = dis.readInt();
+            this.SenderAddress = dis.readUTF();
+            this.DestinAddress = dis.readUTF();
+            this.Message = dis.readUTF();
+            this.Active = dis.readBoolean();
+            this.SentSMS = dis.readInt();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
