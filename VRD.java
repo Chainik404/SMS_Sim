@@ -13,6 +13,13 @@ public class VRD implements IDataSerializer{
         this.Inbox = new ArrayList<>();
     }
 
+    public String GetAddress(){
+        return this.Address;
+    }
+    public void SetAddress(String address){
+        this.Address = address;
+    }
+
     public void Clear(){
         this.Inbox.clear();
     }

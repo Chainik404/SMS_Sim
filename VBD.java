@@ -4,7 +4,7 @@ import java.io.DataOutputStream;
 
 public class VBD implements IDataSerializer{
     private String Name;
-    private Integer Frequency; // quantity SMS per one second
+    private int Frequency; // quantity SMS per one second
     private String SenderAddress;
     private String DestinAddress;
     private String Message;
@@ -24,6 +24,22 @@ public class VBD implements IDataSerializer{
         this.LastSyncTimeMark = 0;
         this.Active = true;
         this.SentSMS = 0;
+    }
+
+    public int GetFrequency(){
+        return this.Frequency;
+    }
+    public String GetSenderAddress(){
+        return this.SenderAddress;
+    }
+    public String GetDestinAddress(){
+        return this.DestinAddress;
+    }
+    public String GetMessage(){
+        return this.Message;
+    }
+    public boolean GetActive(){
+        return this.Active;
     }
 
     public void SetFrequency(Integer frequency){
