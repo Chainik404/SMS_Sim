@@ -18,9 +18,11 @@ public class PDUAddress {
 			this.Number = address.substring(1);
 		}
     }
+
     public String Value(){
         return this.Number;
     }
+    
     public String Encode(){
         // Convert the number to ASCII
         String result = Long.toHexString(Long.parseLong(this.Number));
@@ -44,9 +46,11 @@ public class PDUAddress {
     }
 
     public String Decode(){
+        var lengthStr = this.Number.substring(0,2);
+        var length = 2 * Integer.parseInt(lengthStr, 16);
 
         // skip the length
-        String address = this.Number.substring(2);
+        String address = this.Number.substring(2,2+length);
 
         String result = swapCharacters(address);
         // check if international

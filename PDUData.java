@@ -18,7 +18,13 @@ public class PDUData extends BaseData implements IPDUData, IDataSerializer {
     }
     @Override
     public IPDUData Decode(){
-        SMSData result = new SMSData("asdasd","asdasdasd","asdasdasd");
+        var temp = this.DecodedSMS;
+        var senderAddress = new PDUAddress(temp);
+        temp = temp.substring(senderAddress.Value().length());
+        var destinAddress = new PDUAddress(temp);
+        temp = temp.substring(destinAddress.Value().length());
+        var message = new PDUMessage(temp);
+        SMSData result = new SMSData(senderAddress.Value(), destinAddress.Value(), message.Value());
         return result;
     }
     public String GetAddress(){

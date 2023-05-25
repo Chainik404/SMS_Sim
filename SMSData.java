@@ -23,7 +23,11 @@ public class SMSData extends BaseData implements IPDUData, IDataSerializer {
     }
     @Override
     public IPDUData Encode(){
-        PDUData result = new PDUData("asdasd");
+        var sender = this.SenderAddress.Encode();
+        var destin = this.DestinAddress.Encode();
+        var encode = this.Message.Encode();
+        var pdumsg = sender + destin + encode;
+        PDUData result = new PDUData(pdumsg);
         return result;
     }
 

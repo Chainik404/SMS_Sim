@@ -4,6 +4,11 @@ import java.io.File;
 
 public class TestMain1 {
     public static void main(String[] args) throws InterruptedException {
+
+        var smsData = new SMSData("1234567890","+380935430492","Hello!This is message!");
+        var pduData = smsData.Encode();
+        var sms2 = pduData.Decode();
+        //
         var context = new SMSStationContext();
 
         var filePath = "smsstation.bin";

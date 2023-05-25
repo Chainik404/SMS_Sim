@@ -1,7 +1,13 @@
 public class TestAddress {
     public static void main(String[] args) {
-        TestAddress1("1234567890");
-        TestAddress1("+80935430492");
+        var msg1 = new PDUMessage("Hello! This is message!");
+        var encoded = msg1.Encode();
+        var msg2 = new PDUMessage(encoded);
+        var decoded = msg2.Decode();
+        System.out.println("Decoded = " + decoded);
+
+        //TestAddress1("1234567890");
+        //TestAddress1("+80935430492");
        }
     
        private static void TestAddress1(String address){
